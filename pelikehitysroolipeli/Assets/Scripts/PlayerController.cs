@@ -14,14 +14,6 @@ public class PlayerController : MonoBehaviour
     {
         lastMovement = Vector2.zero;
         rb = GetComponent<Rigidbody2D>();
-
-        Button openbutton = GameObject.Find("OpenButton").GetComponent<Button>();
-        openbutton.onClick.AddListener(OnOpenButton);
-    }
-
-    void OnOpenButton()
-    {
-        Debug.Log("Open button was pressed");
     }
 
     // Update is called once per frame
