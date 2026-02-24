@@ -8,12 +8,48 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     [SerializeField]
     float moveSpeed;
+    GameObject doorpanel;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    
+
     void Start()
     {
         lastMovement = Vector2.zero;
         rb = GetComponent<Rigidbody2D>();
+
+        Button openbutton = GameObject.Find("OpenButton").GetComponent<Button>();
+        openbutton.onClick.AddListener(OnOpenButton);
+
+        Button closebutton = GameObject.Find("CloseButton").GetComponent<Button>();
+        closebutton.onClick.AddListener(OnCloseButton);
+
+        Button lockbutton = GameObject.Find("LockButton").GetComponent<Button>();
+        lockbutton.onClick.AddListener(OnLockButton);
+
+        Button unlockbutton = GameObject.Find("UnlockButton").GetComponent<Button>();
+        unlockbutton.onClick.AddListener(OnUnlockButton);
+
+        doorpanel = GameObject.Find("DoorPanel");
+        doorpanel.SetActive(false);
+    }
+
+    void OnOpenButton()
+    {
+        Debug.Log("Door Opened");
+    }
+
+    void OnCloseButton()
+    {
+        Debug.Log("Door Closed");
+    }
+
+    void OnLockButton()
+    {
+        Debug.Log("Door Locked");
+    }
+
+    void OnUnlockButton()
+    {
+        Debug.Log("Door Unlocked");
     }
 
     // Update is called once per frame
@@ -34,6 +70,8 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Door"))
         {
             Debug.Log("Found Door");
+
+            doorpanel.SetActive(true);
         }
         else if (collision.CompareTag("Merchant"))
         {
