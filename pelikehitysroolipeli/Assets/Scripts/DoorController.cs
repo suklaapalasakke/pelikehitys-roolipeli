@@ -3,6 +3,22 @@ using UnityEngine.Rendering;
 
 public class DoorController : MonoBehaviour
 {
+
+   public enum OvenTila
+    {
+        Auki,
+        Kiinni,
+        Lukossa
+    }
+
+    public enum Toiminto
+    {
+        Avaa,
+        Sulje,
+        Lukitse,
+        AvaaLukko
+    }
+
     // Kuvat oven eri tiloille
     [SerializeField]
     Sprite ClosedDoorSprite;
@@ -28,6 +44,8 @@ public class DoorController : MonoBehaviour
     [SerializeField]
     int DebugFontSize = 32;
 
+    OvenTila oventila;
+
 
     void Start()
     {
@@ -51,9 +69,39 @@ public class DoorController : MonoBehaviour
     /// <summary>
     /// Oveen kohdistuu jokin toiminto joka muuttaa sen tilaa
     /// </summary>
-    public void ReceiveAction()
+    public void ReceiveAction(Toiminto toiminto)
     {
-        
+        switch (oventila)
+        {
+            case OvenTila.Auki:
+                if (toiminto == Toiminto.Sulje)
+                {
+                    oventila = OvenTila.Kiinni;
+                  CloseDoor();
+                }
+                break;
+
+            case OvenTila.Kiinni:
+                if (toiminto == Toiminto.Avaa)
+                {
+                    oventila = OvenTila.Auki;
+                   OpenDoor();
+                }
+                else if (toiminto == Toiminto.Lukitse)
+                {
+                    oventila = OvenTila.Lukossa;
+                    LockDoor();
+                }
+                break;
+
+            case OvenTila.Lukossa:
+                if (toiminto == Toiminto.AvaaLukko)
+                {
+                    oventila = OvenTila.Kiinni;
+                    UnlockDoor();   
+                }
+                break;
+        }
     }
 
     // Kun tulee toiminto, sen perusteella kutsutaan jotakin

@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float moveSpeed;
     GameObject doorpanel;
+    DoorController activeDoor = null;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Start()
@@ -35,21 +36,26 @@ public class PlayerController : MonoBehaviour
     void OnOpenButton()
     {
         Debug.Log("Door Opened");
+        activeDoor.ReceiveAction(DoorController.Toiminto.Avaa);
+       
     }
 
     void OnCloseButton()
     {
         Debug.Log("Door Closed");
+        activeDoor.ReceiveAction(DoorController.Toiminto.Sulje);
     }
 
     void OnLockButton()
     {
         Debug.Log("Door Locked");
+        activeDoor.ReceiveAction(DoorController.Toiminto.Lukitse);
     }
 
     void OnUnlockButton()
     {
         Debug.Log("Door Unlocked");
+        activeDoor.ReceiveAction(DoorController.Toiminto.AvaaLukko);
     }
 
     // Update is called once per frame
@@ -72,6 +78,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Found Door");
 
             doorpanel.SetActive(true);
+            activeDoor = collision.gameObject.GetComponent<DoorController>();
         }
         else if (collision.CompareTag("Merchant"))
         {
