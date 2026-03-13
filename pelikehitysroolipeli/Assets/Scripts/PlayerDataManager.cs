@@ -96,4 +96,27 @@ public class PlayerDataManager : MonoBehaviour
         if (CoinText != null)
             CoinText.text = "Coins: " + coins;
     }
+
+    void OnGUI()
+    {
+
+        float y = Screen.height - 110;
+        
+        if (GUI.Button(new Rect(20, 20, 120, 30), "Add XP"))
+        {
+            AddExperience(1);
+        }
+
+       
+        if (GUI.Button(new Rect(20, 60, 120, 30), "Add HP"))
+        {
+            AddHealth(1);
+        }
+
+      
+        if (GUI.Button(new Rect(20, 100, 120, 30), "Add Coins"))
+        {
+            AddMoney(1);
+        }
+    }
 }
